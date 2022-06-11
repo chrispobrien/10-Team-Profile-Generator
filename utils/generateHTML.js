@@ -3,12 +3,12 @@
 // Each person card has some common data
 generateStandardPerson = (person, position, borderColor) => {
     return `
-    <div class="grid grid-cols-2 border-b-4 border-solid border-black">
+    <div class="grid grid-cols-2 border-b-4 border-solid border-${borderColor}">
         <div class="text-2xl">${person.name}</div>
-        <div class="text-sm text-right align-text-bottom">${position}</div>
+        <div class="text-sm text-right align-text-bottom"><span class="oi" data-glyph="person" title="person" aria-hidden="true" style="font-size: 12px"></span> ${position}</div>
     </div>
     <div class="">Employee ID: ${person.employeeId}</div>
-    <div class="">Email: <a href="mailto:${person.email}">${person.email}</a></div>
+    <div class="">Email: <a href="mailto:${person.email}" class="text-blue-500">${person.email}</a></div>
     `
 }
 
@@ -27,7 +27,7 @@ generateEngineer = (engineer) => {
     return `
     <div class="border-solid border-red-800 border-2 rounded-xl bg-slate-300 w-96 m-5 p-5">
         ${generateStandardPerson(engineer,'Engineer','red-800')}
-        <div class="">GitHub User Name: <a href="https://github.com/${engineer.githubUserName}" target="_blank">ericlevynr</a> <span class="oi" data-glyph="external-link" title="icon name" aria-hidden="true" style="font-size: 12px"></span></div>
+        <div class="">GitHub User Name: <a href="https://github.com/${engineer.githubUserName}" target="_blank">ericlevynr</a> <span class="oi" data-glyph="external-link" title="external link" aria-hidden="true" style="font-size: 12px"></span></div>
     </div>
 `
 };
@@ -59,9 +59,9 @@ function generateHTML (team) {
         <meta name="description" content="Team Profile">
         <title>Team Profile</title>
     </head>
-    <body class="bg-slate-100 text-slate-800 text-lg">
-    <header class="bg-slate-200 px-4 py-4 mr-0 w-screen">
-        <section id="title" class="text-xl font-bold">${team.name} Team Profile</section>
+    <body class="bg-white text-black text-lg">
+    <header class="bg-red-500 px-4 py-4 mr-0 w-screen">
+        <section id="title" class="text-xl text-white font-bold">${team.name} Team Profile</section>
     </header>
 
     <main class="m-5 grid lg:grid-cols-2 sm:grid-cols-1">
@@ -69,12 +69,12 @@ function generateHTML (team) {
 
         <section id="engineers">
             <div class="text-2xl ml-10 text-red-800 font-bold">Engineers</div>
-            ${team.engineers.map(engineer => generateEngineer(engineer))}
+            ${team.engineers.reduce((engineersEl,engineer) => engineersEl+generateEngineer(engineer),'')}
         </section>
 
         <section id="interns">
             <div class="text-2xl ml-10 text-blue-800 font-bold">Interns</div>
-            ${team.interns.map(intern => generateIntern(intern))}
+            ${team.interns.reduce((internsEl, intern) => internsEl+generateIntern(intern),'')}
         </section>
 
     </main>
