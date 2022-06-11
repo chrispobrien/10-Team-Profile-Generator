@@ -1,4 +1,49 @@
-function generateHTML (data) {
+// Helper functions
+
+// Each person card has some common data
+generateStandardPerson = (person, position, borderColor) => {
+    return `
+    <div class="grid grid-cols-2 border-b-4 border-solid border-black">
+        <div class="text-2xl">${person.name}</div>
+        <div class="text-sm text-right align-text-bottom">${position}</div>
+    </div>
+    <div class="">Employee ID: ${person.employeeId}</div>
+    <div class="">Email: <a href="mailto:${person.email}">${person.email}</a></div>
+    `
+}
+
+// Only one manager
+generateManager = (manager) => {
+    return `
+    <section id="manager" class="lg:col-span-2 sm:col-span-1 border-solid border-slate-800 border-2 rounded-xl bg-slate-300 w-96 m-5 p-5">
+        ${generateStandardPerson(manager,'Manager','slate-800')}
+        <div class="">Office Phone: ${manager.getFormattedPhone()}</div>
+    </section>
+`
+};
+
+// One or more engineers
+generateEngineer = (engineer) => {
+    return `
+    <div class="border-solid border-red-800 border-2 rounded-xl bg-slate-300 w-96 m-5 p-5">
+        ${generateStandardPerson(engineer,'Engineer','red-800')}
+        <div class="">GitHub User Name: <a href="https://github.com/${engineer.githubUserName}" target="_blank">ericlevynr</a> <span class="oi" data-glyph="external-link" title="icon name" aria-hidden="true" style="font-size: 12px"></span></div>
+    </div>
+`
+};
+
+// One or more interns
+generateIntern = (intern) => {
+    return `
+    <div class="border-solid border-blue-800 border-2 rounded-xl bg-slate-300 w-96 m-5 p-5">
+        ${generateStandardPerson(intern,'Intern','blue-800')}
+        <div class="">School: ${intern.school}</div>
+    </div>
+`
+};
+
+// Render the HTML
+function generateHTML (team) {
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -14,7 +59,29 @@ function generateHTML (data) {
         <meta name="description" content="Team Profile">
         <title>Team Profile</title>
     </head>
-    
-    <body class="bg-slate-100 text-slate-800 text-lg"> 
+    <body class="bg-slate-100 text-slate-800 text-lg">
+    <header class="bg-slate-200 px-4 py-4 mr-0 w-screen">
+        <section id="title" class="text-xl font-bold">${team.name} Team Profile</section>
+    </header>
+
+    <main class="m-5 grid lg:grid-cols-2 sm:grid-cols-1">
+        ${generateManager(team.manager)}
+
+        <section id="engineers">
+            <div class="text-2xl ml-10 text-red-800 font-bold">Engineers</div>
+            ${team.engineers.map(engineer => generateEngineer(engineer))}
+        </section>
+
+        <section id="interns">
+            <div class="text-2xl ml-10 text-blue-800 font-bold">Interns</div>
+            ${team.interns.map(intern => generateIntern(intern))}
+        </section>
+
+    </main>
+    </body>
+        
+</html>
     `
-}
+};
+
+module.exports = generateHTML;
