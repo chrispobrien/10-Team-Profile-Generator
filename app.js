@@ -6,7 +6,7 @@ const writeToFile = require('./utils/writeToFile');
 promptUser()
 .then(team => {
     // Write generated HTML from team object to file
-    writeToFile('./index.html',generateHTML(team))
+    writeToFile('./dist/index.html',generateHTML(team))
     .then(console.log("Success!"))
     .catch(err => console.log("Error!\n",err));
 })
