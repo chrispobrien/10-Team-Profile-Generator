@@ -23,7 +23,7 @@ I used the Node package Inquirer to prompt the user for team data, including:
   * Email Address
   * School Name
 
-As you can see, the first three data items for each type of team member are the same: Name, Employee ID, and Email Address.  This gives us the opportunity to set up a class with this basic information, and then extend that base class to three new classes.
+As you can see, the first three data items for each type of team member are the same: Name, Employee ID, and Email Address.  This gives us the opportunity to set up a class with this basic information, and then extend that base class to three new classes.  I set up a Team class to organize all the information in one object.
 
 I also included the Jest package to perform some tests on the five classes.
 

@@ -8,7 +8,7 @@ const Team = require('../lib/Team');
 
 // This prompts for manager, engineer, and intern
 //  keyName and keyDescription are for the fourth property that differs between titles
-//  multiple is true to ask the user if they wish to enter another
+//  if multiple is true, then ask the user if they wish to enter another
 const promptPerson = (title, keyName, keyDescription, multiple) => {
     return inquirer.prompt([
         {
@@ -41,9 +41,10 @@ const promptPerson = (title, keyName, keyDescription, multiple) => {
             type: 'input',
             name: 'email',
             message: `What is the ${title}'s Email Address? (Required)`,
+            // default to convention of first initial, last name
             default: (answers) => answers.name.split(' ').length>1 ? answers.name[0].toLowerCase()+answers.name.split(' ')[1].toLowerCase()+'@example.com' : '',
             validate: emailInput => {
-                if (emailInput) {
+                if (emailInput && emailInput.includes('@')) {
                     return true;
                 } else {
                     console.log(`Please enter the ${title}'s Email Address!`);
@@ -103,7 +104,7 @@ const promptInterns = interns => {
 // Filter out non-numbers
 const onlyNumbers = (input) => {
     const numbers = '0123456789';
-    return input.split('').reduce((output, character) => output+ (numbers.includes(character) ? character : ''),'');
+    return input.split('').reduce((output, character) => output + (numbers.includes(character) ? character : ''),'');
 }
 
 // Assemble team object from user prompts

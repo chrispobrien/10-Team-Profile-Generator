@@ -16,6 +16,10 @@ test('check manager object in team object', () => {
     team.manager = manager;
 
     expect(team.manager).toEqual(expect.any(Object));
+    expect(team.manager.name).toBe('Phil Collen');
+    expect(team.manager.employeeId).toBe(1);
+    expect(team.manager.email).toBe('pcollen@example.com');
+    expect(team.manager.phone).toBe('9145551212');
 });
 
 test('check engineer array of objects in team objects', () => {

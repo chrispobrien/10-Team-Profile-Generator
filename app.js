@@ -8,5 +8,5 @@ promptUser()
     // Write generated HTML from team object to file
     writeToFile('./index.html',generateHTML(team))
     .then(console.log("Success!"))
-    .catch(err => console.log(err));
+    .catch(err => console.log("Error!\n",err));
 })
