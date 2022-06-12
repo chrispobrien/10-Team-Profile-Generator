@@ -1,14 +1,14 @@
 // Helper functions
 
-// Each person card has some common data
-generateStandardPerson = (person, position, borderColor) => {
+// Each employee card has some common data
+generateStandardEmployee = (employee, position, borderColor) => {
     return `
     <div class="grid grid-cols-2 border-b-4 border-solid border-${borderColor}">
-        <div class="text-2xl">${person.name}</div>
-        <div class="text-sm text-right align-text-bottom"><span class="oi" data-glyph="person" title="person" aria-hidden="true" style="font-size: 12px"></span> ${position}</div>
+        <div class="text-2xl">${employee.name}</div>
+        <div class="text-sm text-right align-text-bottom"><span class="oi" data-glyph="employee" title="employee" aria-hidden="true" style="font-size: 12px"></span> ${position}</div>
     </div>
-    <div class="">Employee ID: ${person.employeeId}</div>
-    <div class="">Email: <a href="mailto:${person.email}" class="text-blue-500">${person.email}</a></div>
+    <div class="">Employee ID: ${employee.id}</div>
+    <div class="">Email: <a href="mailto:${employee.email}" class="text-blue-500">${employee.email}</a></div>
     `
 }
 
@@ -16,7 +16,7 @@ generateStandardPerson = (person, position, borderColor) => {
 generateManager = (manager) => {
     return `
     <section id="manager" class="lg:col-span-2 sm:col-span-1 border-solid border-slate-800 border-2 rounded-xl bg-slate-300 w-96 m-5 p-5">
-        ${generateStandardPerson(manager,'Manager','slate-800')}
+        ${generateStandardEmployee(manager,'Manager','slate-800')}
         <div class="">Office Phone: ${manager.getFormattedPhone()}</div>
     </section>
 `
@@ -26,8 +26,8 @@ generateManager = (manager) => {
 generateEngineer = (engineer) => {
     return `
     <div class="border-solid border-red-800 border-2 rounded-xl bg-slate-300 w-96 m-5 p-5">
-        ${generateStandardPerson(engineer,'Engineer','red-800')}
-        <div class="">GitHub User Name: <a href="https://github.com/${engineer.githubUserName}" target="_blank">ericlevynr</a> <span class="oi" data-glyph="external-link" title="external link" aria-hidden="true" style="font-size: 12px"></span></div>
+        ${generateStandardEmployee(engineer,'Engineer','red-800')}
+        <div class="">GitHub User Name: <a href="https://github.com/${engineer.github}" target="_blank">ericlevynr</a> <span class="oi" data-glyph="external-link" title="external link" aria-hidden="true" style="font-size: 12px"></span></div>
     </div>
 `
 };
@@ -36,7 +36,7 @@ generateEngineer = (engineer) => {
 generateIntern = (intern) => {
     return `
     <div class="border-solid border-blue-800 border-2 rounded-xl bg-slate-300 w-96 m-5 p-5">
-        ${generateStandardPerson(intern,'Intern','blue-800')}
+        ${generateStandardEmployee(intern,'Intern','blue-800')}
         <div class="">School: ${intern.school}</div>
     </div>
 `

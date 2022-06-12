@@ -9,7 +9,7 @@ const Team = require('../lib/Team');
 // This prompts for manager, engineer, and intern
 //  keyName and keyDescription are for the fourth property that differs between titles
 //  if multiple is true, then ask the user if they wish to enter another
-const promptPerson = (title, keyName, keyDescription, multiple) => {
+const promptEmployee = (title, keyName, keyDescription, multiple) => {
     return inquirer.prompt([
         {
             type: 'input',
@@ -26,10 +26,10 @@ const promptPerson = (title, keyName, keyDescription, multiple) => {
         },
         {
             type: 'input',
-            name: 'employeeId',
+            name: 'id',
             message: `What is the ${title}'s Employee ID? (Required)`,
-            validate: employeeIdInput => {
-                if (employeeIdInput) {
+            validate: idInput => {
+                if (idInput) {
                     return true;
                 } else {
                     console.log(`Please enter the ${title}'s Employee ID!`);
@@ -67,7 +67,7 @@ const promptPerson = (title, keyName, keyDescription, multiple) => {
         },
         {
             type: 'confirm',
-            name: 'confirmAddPerson',
+            name: 'confirmAddEmployee',
             message: `Would you like to add a new ${title}?`,
             default: false,
             when: multiple
@@ -77,10 +77,10 @@ const promptPerson = (title, keyName, keyDescription, multiple) => {
 
 // Prompt for engineers on the team
 const promptEngineers = engineers => {
-    return promptPerson('Engineer','githubUserName','GitHub User Name', true)
+    return promptEmployee('Engineer','github','GitHub User Name', true)
     .then(engineer => {
-        engineers.push(new Engineer(engineer.name, engineer.employeeId, engineer.email, engineer.githubUserName));
-        if (engineer.confirmAddPerson) {
+        engineers.push(new Engineer(engineer.name, engineer.id, engineer.email, engineer.github));
+        if (engineer.confirmAddEmployee) {
             return promptEngineers(engineers);
         } else {
             return engineers;
@@ -90,10 +90,10 @@ const promptEngineers = engineers => {
 
 // Prompt for interns on the team
 const promptInterns = interns => {
-    return promptPerson('Intern','school','school', true)
+    return promptEmployee('Intern','school','school', true)
     .then(intern => {
-        interns.push(new Intern(intern.name, intern.employeeId, intern.email, intern.school));
-        if (intern.confirmAddPerson) {
+        interns.push(new Intern(intern.name, intern.id, intern.email, intern.school));
+        if (intern.confirmAddEmployee) {
             return promptInterns(interns);
         } else {
             return interns;
@@ -128,9 +128,9 @@ const promptUser = () => {
         .then(answers => {
             const team = new Team(answers.name);
             console.log("\n== Manager ==\n");
-            promptPerson('Manager','phone','Phone Number', false)
+            promptEmployee('Manager','officeNumber','Phone Number', false)
             .then(manager => {
-                team.manager = new Manager(manager.name, manager.employeeId, manager.email, onlyNumbers(manager.phone));
+                team.manager = new Manager(manager.name, manager.id, manager.email, onlyNumbers(manager.officeNumber));
                 console.log("\n== Engineers ==\n");
                 promptEngineers([])
                 .then(engineers => {
